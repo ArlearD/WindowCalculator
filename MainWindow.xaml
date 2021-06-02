@@ -1,0 +1,32 @@
+﻿<Window x:Class="WindowCalculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Калькулятор для расчёта стоимости установки окна" Height="375" Width="800"
+        ResizeMode="CanMinimize">
+    <Grid>
+        <Rectangle HorizontalAlignment="Center" Height="83" Margin="0,10,0,0" VerticalAlignment="Top" Width="756" Stroke="Black"/>
+        <Rectangle HorizontalAlignment="Center" Height="202" Margin="0,109,0,0" VerticalAlignment="Top" Width="756" Stroke="Black"/>
+        <TextBlock HorizontalAlignment="Left" Margin="58,10,0,0" Text="Размер окна:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman"/>
+        <TextBlock HorizontalAlignment="Left" Margin="258,10,0,0" Text="Тип рамы:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman"/>
+        <TextBlock HorizontalAlignment="Left" Margin="66,120,0,0" Text="Срочность:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman"/>
+        <TextBlock HorizontalAlignment="Left" Margin="237,120,0,0" Text="Высота этажа:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman"/>
+        <TextBlock HorizontalAlignment="Left" Margin="511,120,0,0"  Text="Стоимость установки:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="541,10,0,0" Text="Стоимость окна:" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman" FontWeight="Bold"/>
+
+        <TextBox MaxLength="2" x:Name="windowSize" TextChanged="WindowSizeValidator" HorizontalAlignment="Left" Margin="109,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="20" FontFamily="Times New Roman" TextAlignment="Center" Text="10"/>
+        <TextBox MaxLength="1" x:Name="frameType" TextChanged="FrameTypeValidator" HorizontalAlignment="Left" Margin="296,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="20" FontFamily="Times New Roman" TextAlignment="Center" Text="1"/>
+        <TextBox MaxLength="2" x:Name="floorHeight" TextChanged="FloorHeightValidator" HorizontalAlignment="Left" Margin="296,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="20" FontFamily="Times New Roman" TextAlignment="Center" Text="1"/>
+        <TextBox MaxLength="1" x:Name="urgency" TextChanged="UrgencyValidator" HorizontalAlignment="Left" Margin="109,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="30" FontSize="20" FontFamily="Times New Roman" TextAlignment="Center" Text="0"/>
+
+        <TextBlock x:Name="installationCostResult" HorizontalAlignment="Left" Margin="633,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman"/>
+        <TextBlock x:Name="windowCostResult" HorizontalAlignment="Left" Margin="633,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontFamily="Times New Roman"/>
+
+        <TextBlock x:Name="windowSizeErrorMessage" Visibility="Hidden" HorizontalAlignment="Left" Margin="42,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="Red"><Run Language="ru-ru" Text="Введите значение от 10 до 50"/></TextBlock>
+        <TextBlock x:Name="frameTypeErrorMessage" Visibility="Hidden" HorizontalAlignment="Left" Margin="235,73,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="Red" Text="Введите значение от 1 до 3"/>
+        <TextBlock x:Name="floorHeightErrorMessage" Visibility="Hidden" HorizontalAlignment="Left" Margin="232,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="Red" Text="Введите значение от 1 до 19"/>
+        <TextBlock x:Name="urgencyErrorMessage" Visibility="Hidden" HorizontalAlignment="Left" Margin="48,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="Red" Width="158"><Run Text="Введите количество дней от 0 до 7 в течени"/><Run Language="ru-ru" Text="е"/><Run Text=" которых требуется выполнить заказ"/></TextBlock>
+    </Grid>
+</Window>
