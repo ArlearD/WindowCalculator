@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WindowCalculator.Models;
+using WindowCalculator.Models.Enums;
+using WindowCalculator.Services;
 
 namespace WindowCalculator
 {
@@ -9,9 +12,11 @@ namespace WindowCalculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private CalculatorService _calculatorService;
         public MainWindow()
         {
             InitializeComponent();
+            _calculatorService = new CalculatorService();
         }
 
         private void ValidateNumberTypeAndRange(int minValue, int maxValue, TextBlock errorBox, TextBox targetField)
@@ -33,69 +38,74 @@ namespace WindowCalculator
             }
         }
 
-        private void CalculateWindowCost()
+        private void UpdateWindowCostResult()
         {
-            if (windowCostResult != null)
+            if (windowCostResult == null)
+                return;
+
+            var windowCost = new WindowCost();
+
+            try
             {
-                try
-                {
-                    windowCostResult.Text = (int.Parse(windowSize.Text) * int.Parse(frameType.Text)).ToString();
-                }
-                catch
-                {
-                    windowCostResult.Text = string.Empty;
-                }
+                windowCost = new WindowCost(int.Parse(windowSize.Text), (FrameType)int.Parse(frameType.Text));
             }
+            catch
+            {
+                windowCostResult.Text = string.Empty;
+            }
+
+            windowCostResult.Text = _calculatorService.CalculateWindowCost(windowCost)
+                .ToString();
         }
 
-        private void CalculateInstallationCost()
+        private void UpdateInstallationCostResult()
         {
-            if (installationCostResult != null)
+            if (installationCostResult == null)
+                return;
+
+            var installationCost = new InstallationCost();
+
+            try
             {
-                try
-                {
-                    var difDaysCost = 7 - int.Parse(urgency.Text);
-                    if (difDaysCost <= 0)
-                    {
-                        difDaysCost = 1;
-                    }
-                    installationCostResult.Text = (int.Parse(floorHeight.Text) * difDaysCost).ToString();
-                }
-                catch
-                {
-                    installationCostResult.Text = string.Empty;
-                }
+                installationCost = new InstallationCost(int.Parse(urgency.Text), int.Parse(floorHeight.Text));
             }
+            catch
+            {
+                installationCostResult.Text = string.Empty;
+            }
+            
+            installationCostResult.Text = _calculatorService.CalculateInstallationCost(installationCost)
+                .ToString();
         }
 
         private void WindowSizeValidator(object sender, TextChangedEventArgs e)
         {
             ValidateNumberTypeAndRange(10, 50, windowSizeErrorMessage, windowSize);
-            CalculateWindowCost();
+            UpdateWindowCostResult();
         }
 
         private void FrameTypeValidator(object sender, TextChangedEventArgs e)
         {
             ValidateNumberTypeAndRange(1, 3, frameTypeErrorMessage, frameType);
-            CalculateWindowCost();
+            UpdateWindowCostResult();
         }
 
         private void FloorHeightValidator(object sender, TextChangedEventArgs e)
         {
             ValidateNumberTypeAndRange(1, 19, floorHeightErrorMessage, floorHeight);
-            CalculateInstallationCost();
+            UpdateInstallationCostResult();
         }
 
         private void DateChangedController(object sender, MouseButtonEventArgs e)
         {
             ValidateNumberTypeAndRange(1, 19, floorHeightErrorMessage, floorHeight);
-            CalculateInstallationCost();
+            UpdateInstallationCostResult();
         }
 
         private void UrgencyValidator(object sender, TextChangedEventArgs e)
         {
             ValidateNumberTypeAndRange(0, 7, urgencyErrorMessage, urgency);
-            CalculateInstallationCost();
+            UpdateInstallationCostResult();
         }
     }
 }
